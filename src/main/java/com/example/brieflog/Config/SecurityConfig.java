@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/**", "/teams/search").permitAll()
+//                        .requestMatchers("/meetings/**").permitAll()
                         .requestMatchers("/teams/create").authenticated()
                         .anyRequest().authenticated()
                 )
