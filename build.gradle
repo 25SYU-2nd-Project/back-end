@@ -47,3 +47,7 @@ tasks.named('test') {
 jar {
 	enabled = false
 }
+
+tasks.named('bootJar') {
+	mainClass.set('com.example.brieflog.BrieflogApplication')
+}

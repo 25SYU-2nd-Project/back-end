@@ -103,4 +103,10 @@ public class TeamController {
         List<UserResponse> members = teamService.getApprovedMembers(teamId);
         return ResponseEntity.ok(members);
     }
+
+    @GetMapping("/{teamId}/leader")
+    public ResponseEntity<String> getTeamLeaderId(@PathVariable Long teamId) {
+        String leaderId = teamService.getTeamLeaderId(teamId);
+        return ResponseEntity.ok(leaderId);
+    }
 }

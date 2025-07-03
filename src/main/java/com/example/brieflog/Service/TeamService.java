@@ -177,4 +177,10 @@ public class TeamService {
                 .map(ut -> new UserResponse(ut.getUser()))
                 .collect(Collectors.toList());
     }
+
+    public String getTeamLeaderId(Long teamId) {
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new RuntimeException("팀 없음"));
+        return team.getLeader().getUserId();
+    }
 }
