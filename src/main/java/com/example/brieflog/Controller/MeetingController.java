@@ -43,6 +43,20 @@ public class MeetingController {
         return ResponseEntity.ok(result);
     }
 
+    // 회의 상세 조회
+    @GetMapping("/{meetingId}")
+    public ResponseEntity<MeetingResponse> getMeetingDetail(@PathVariable Long meetingId) {
+        Meeting meeting = meetingService.getMeetingById(meetingId);
+        return ResponseEntity.ok(MeetingResponse.fromEntity(meeting));
+    }
+
+    // 회의 삭제
+    @DeleteMapping("/{meetingId}")
+    public ResponseEntity<String> deleteMeeting(@PathVariable Long meetingId) {
+        meetingService.deleteMeeting(meetingId);
+        return ResponseEntity.ok("회의 삭제 완료!");
+    }
+
     @GetMapping("/{meetingId}/attendees")
     public ResponseEntity<List<AttendanceResponse>> getAttendees(@PathVariable Long meetingId) {
         Long leaderId = meetingService.getLeaderIdByMeetingId(meetingId);

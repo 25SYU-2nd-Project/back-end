@@ -69,6 +69,27 @@ public class MeetingService {
         return teamRepository.findLeaderIdByMeetingId(meetingId);
     }
 
+    // 회의 상세 조회
+    public Meeting getMeetingById(Long meetingId) {
+        return meetingRepository.findById(meetingId)
+                .orElseThrow(() -> new IllegalArgumentException("회의를 찾을 수 없습니다."));
+    }
+
+    // 회의 삭제
+    @Transactional
+    public void deleteMeeting(Long meetingId) {
+        // 존재 여부 확인
+        if (!meetingRepository.existsById(meetingId)) {
+            throw new IllegalArgumentException("존재하지 않는 회의입니다.");
+        }
+
+        // 관련 참석자 정보 먼저 삭제
+        attendeeRepository.deleteByMeetingId(meetingId);
+
+        // 회의 삭제
+        meetingRepository.deleteById(meetingId);
+    }
+
     // 출석 상태 변경 (출석/결석 등)
     @Transactional
     public void updateAttendance(Long meetingId, Long userId, AttendanceStatus status) {

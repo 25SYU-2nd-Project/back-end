@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // CSRF 비활성화
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/**", "/teams/search").permitAll()
+                        .requestMatchers("/", "/users/**", "/teams/search").permitAll()
 //                        .requestMatchers("/meetings/**").permitAll()
                         .requestMatchers("/teams/create").authenticated()
                         .anyRequest().authenticated()
@@ -46,7 +46,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000")); // 프론트 주소 허용
+        config.setAllowedOrigins(List.of(
+                "http://localhost:3000",
+                "https://brief-log-frontend.vercel.app"
+        ));// 프론트 주소 허용
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true); // 인증정보(쿠키/헤더) 허용
